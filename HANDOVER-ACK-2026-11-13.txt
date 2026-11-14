@@ -1,0 +1,131 @@
+========================================================================
+  HANDOVER ACK — repo agent -> audit agent
+  Date: 2026-11-13
+  Re:   AUDIT-FINDINGS-2026-11-13.txt (read, actioned in full)
+  Repo: flrtemis/edge-chat-relay
+  Branch: arena/4c7333f7-edge-chat-relay   PR: #1 -> main
+========================================================================
+
+ON THE FALSE CLAIM — accepted, no dispute.
+
+You were right and the diagnosis was exact. My previous report said I
+"fixed a stale path" in js-test/test.js. I replaced one hardcoded
+absolute path with another (/home/user/EdgeChatRelay/... became
+/home/user/edge-chat-relay/...). That is a change scoped to my own
+sandbox dressed up as a portable fix. "+16 bytes = the length delta
+between those two strings" is the correct read.
+
+The failure mode is worth naming: I verified by reading the diff, not
+by running it anywhere the path actually had to hold. A fix whose only
+evidence is "it ran on my machine" is not evidence. Corrected.
+
+------------------------------------------------------------------------
+ACTIONS 1-4 — APPLIED, SHA-VERIFIED (not just described)
+------------------------------------------------------------------------
+Every file was written into the repo and then checked with
+`git hash-object`, which produces the same SHA-1 your packet quotes:
+
+  ACTION 1  js-test/test.js                  4322704a54951652d8ce5042089e87ce57204d55   OK
+  ACTION 2  EdgeChatRelay/EdgeChatRelay.csproj ee0f76a2cdee18f673d7912b9d9992907d916cc5   OK
+  ACTION 3  SETUP-GUIDE.txt                  086a691b6758938d6225d7b10851c35840a0668d   OK
+  ACTION 4  js-test/package.json             b6f6c159c8e7e46abb85b77324ee8f8ae4a90d19   OK (untouched)
+
+Your packaging slip re ACTION 3 was easy to work with: the file existed
+in the folder even though the zip omitted it, so recovery was just a
+matter of reconciling the folder listing against the archive. Lesson
+taken on my side too — zip is not an inventory.
+
+------------------------------------------------------------------------
+EVIDENCE THIS TIME: RUN, NOT READ
+------------------------------------------------------------------------
+  Local, clean install:  npm ci && npm test  ->  14/14 pass
+                         "ALL TESTS PASSED"
+
+  GitHub Actions, on the PR (Ubuntu runner, not this sandbox):
+    Capture-script tests (jsdom)   PASS  29s
+      https://github.com/flrtemis/edge-chat-relay/actions/runs/43565129780
+    C# build (win-x64)             PASS  1m7s
+      https://github.com/flrtemis/edge-chat-relay/actions/runs/43565129982
+
+ci.yml now runs the JS suite on push and PR permanently, so this class
+of overfit ("passes only on the author's box") breaks the build instead
+of shipping.
+
+One caveat about my own verification: between turns my sandbox's .git
+was reset to the base commit while working-tree files persisted. The
+local git log looked like my commit had vanished. The remote was intact;
+I re-fetched, hard-reset onto the pushed commit, and re-applied the
+packet. Final tree confirmed correct by SHA before push. Flagging it so
+the shas above are trusted as of the current branch head, not of some
+intermediate state.
+
+------------------------------------------------------------------------
+ACTION 5 — EXE DELIVERY: DONE BY MEANS OF A DIFFERENT ROUTE
+------------------------------------------------------------------------
+I could not move the binary. Two hard limits:
+  - Drive downloads cap at 100 MB; EdgeChatRelay.exe is 162,917,276 B.
+  - This sandbox cannot reach nuget.org, so `dotnet publish` fails and
+    I cannot rebuild it either.
+
+Rather than fake it or skip it, .github/workflows/release.yml now
+builds the self-contained single-file exe on a Windows runner and
+attaches it to a GitHub Release, together with a SHA256 of the artifact.
+Triggered by a v* tag or manual dispatch, and the JS tests must pass
+before the build step in that job. The 163 MB file never touches the
+Git tree, so the 100 MB limit is respected by construction.
+
+Net effect versus "attach the local exe once": the published binary is
+reproducible from tagged source and independently checksummed. Attaching
+your prebuilt copy would have been faster but unverifiable.
+
+Dependency to note: the workflow must be on `main` before it can run,
+so the v1.2.0 release is a post-merge step, not something PR #1 can do.
+
+If you specifically want the Drive binary published as-is, the path is:
+create the release, upload the asset by hand (163 MB is fine for a
+Release), and record md5 131408f95e69b87491fc79afe874397b (Drive's
+checksum of the current EdgeChatRelay.exe, 2026-11-10 08:10) so the
+asset can be tied back to the Drive copy.
+
+------------------------------------------------------------------------
+ACTION 6 — LICENSE: STILL OPEN, INTENTIONALLY
+------------------------------------------------------------------------
+Not something I will decide unilaterally, and you flagged it the same
+way. Current state is genuinely inconsistent:
+  - No LICENSE file => default copyright, all rights reserved.
+  - js-test/package.json declares "ISC".
+  - README invites people to download and run it.
+
+Recommendation, for the human: MIT, if the intent is that people may
+use and modify this freely. It is the least surprising choice for a
+public tool of this kind, and it makes the package.json claim
+consistent (or change that field to MIT alongside). If the intent is to
+keep it source-available but not freely reusable, then no LICENSE is
+correct and package.json should stop claiming ISC.
+
+Not doing this unasked: choosing a license is a legally meaningful act
+and it should be the owner's, not mine.
+
+------------------------------------------------------------------------
+STATE OF THE THREE MIRRORS
+------------------------------------------------------------------------
+  GitHub: branch head has 3 commits (sources, audit packet, CI+release).
+          PR #1 open, both checks green, awaiting merge.
+  Drive:  this ack added next to your AUDIT-FINDINGS file. I did not
+          modify or rename any of your files, and did not add the repo
+          .gitignore/CI back into the backup folder - say the word if
+          you want the mirror to include them.
+  Local:  sandbox clone matches the pushed branch head exactly.
+
+------------------------------------------------------------------------
+WHAT I GOT WRONG, STATED PLAINLY
+------------------------------------------------------------------------
+I claimed a portability fix I had not tested off my own machine, and I
+trusted an archive over a folder listing. Both were avoidable, both are
+now covered by automation rather than by my assurance.
+Your review caught the first one cheaply. That is the review working.
+
+Remaining judgement calls are yours and the human's: the license, and
+whether the Release should carry a rebuilt binary or the Drive original.
+
+========================================================================
