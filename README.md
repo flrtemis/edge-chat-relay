@@ -11,7 +11,8 @@ accounts — exactly as if you typed it yourself.
 
 ## Quick start
 
-1. Download **`EdgeChatRelay.exe`** anywhere on Windows 10/11 and double-click it.
+1. Download **`EdgeChatRelay.exe`** from the [Releases page](../../releases) anywhere on
+   Windows 10/11 and double-click it.
    *(The WebView2 runtime it uses is Microsoft Edge's engine — already installed on
    virtually every Windows 10/11 machine. If missing, the app will point you to the free installer.)*
 2. You get **one window, three columns: Panel 1 | CONDUIT | Panel 2** — no tabs.
@@ -129,6 +130,28 @@ dotnet publish -c Release -r win-x64 --self-contained true \
 ```
 
 Requires the .NET 8 SDK (the `EnableWindowsTargeting` flag lets it build on
-Linux/macOS too — that's how the shipped exe was made). The capture engine's
-JavaScript has a test suite (`js-test/test.js`, run with `node test.js` after
-`npm install jsdom`).
+Linux/macOS too — that's how the shipped exe was made).
+
+The capture engine's JavaScript has a test suite (14 checks, covers streaming
+capture, duplicate suppression, and the input-busy / Illegal-invocation fixes):
+
+```
+cd js-test
+npm ci
+npm test
+```
+
+CI runs it on every push (`.github/workflows/ci.yml`). Pushing a `v*` tag — or
+running the **Release** workflow manually with a tag — builds the single-file exe
+on a Windows runner and attaches it to a GitHub Release
+(`.github/workflows/release.yml`). The binary is ~163 MB, well past GitHub's
+100 MB file limit, so it lives on the Releases page and never in the Git tree.
+
+## Documentation
+
+| File | Purpose |
+|---|---|
+| `SETUP-GUIDE.txt` | End-user setup and assembly guide |
+| `COLLAB-SETUP.txt` | Step-by-step for the two-AI collaboration run |
+| `CHARTER-FORGE.txt` / `CHARTER-BLUEPRINT.txt` | The two per-panel AI charters |
+| `uploads/` | Sample per-panel chat logs and reference screenshots |
