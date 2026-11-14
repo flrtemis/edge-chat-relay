@@ -1,8 +1,9 @@
 // Test harness for the capture/injection JS embedded in CaptureScript.cs
 const fs = require('fs');
+const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const src = fs.readFileSync('/home/user/edge-chat-relay/EdgeChatRelay/CaptureScript.cs', 'utf8');
+const src = fs.readFileSync(path.join(__dirname, '..', 'EdgeChatRelay', 'CaptureScript.cs'), 'utf8');
 const m = src.match(/public const string Source = """\r?\n([\s\S]*?)\r?\n""";/);
 if (!m) { console.error('FAIL: could not extract JS from CaptureScript.cs'); process.exit(1); }
 const js = m[1];

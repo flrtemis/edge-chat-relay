@@ -16,7 +16,7 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <DebugType>none</DebugType>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Description>Dual-panel Edge (WebView2) browser with a third "conduit" prompt box relaying chatbot responses between panels</Description>
   </PropertyGroup>
 
