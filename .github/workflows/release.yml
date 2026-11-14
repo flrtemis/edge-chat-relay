@@ -1,0 +1,78 @@
+name: Release
+
+# Builds the self-contained win-x64 EdgeChatRelay.exe and attaches it to a
+# GitHub Release. The binary is ~163 MB, which is too large for the Git tree
+# (GitHub hard-blocks files over 100 MB) but is fine as a Release asset.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to create or update (e.g. v1.2.0)'
+        required: true
+        default: 'v1.2.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish single-file exe
+    runs-on: windows-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Capture-script tests
+        working-directory: js-test
+        run: |
+          npm ci
+          npm test
+
+      - name: Publish
+        run: >
+          dotnet publish EdgeChatRelay/EdgeChatRelay.csproj
+          -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableWindowsTargeting=true
+          -o publish
+
+      - name: Verify artifact
+        shell: pwsh
+        run: |
+          $exe = 'publish/EdgeChatRelay.exe'
+          if (-not (Test-Path $exe)) { throw "Build produced no $exe" }
+          $size = (Get-Item $exe).Length
+          $sha = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLower()
+          Write-Host "Size: $size bytes"
+          Write-Host "SHA256: $sha"
+          "SHA256  $sha  EdgeChatRelay.exe" | Out-File -Encoding utf8 publish/EdgeChatRelay.exe.sha256
+
+      - name: Attach to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: Edge Chat Relay ${{ env.TAG }}
+          draft: false
+          generate_release_notes: true
+          body: |
+            Self-contained Windows build — nothing to install except the
+            WebView2 runtime that already ships with Windows 10/11.
+
+            Download `EdgeChatRelay.exe`, put it anywhere, double-click it.
+            `EdgeChatRelay.exe.sha256` is the checksum of the attached binary.
+          files: |
+            publish/EdgeChatRelay.exe
+            publish/EdgeChatRelay.exe.sha256

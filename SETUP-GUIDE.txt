@@ -1,0 +1,214 @@
+========================================================================
+   EdgeChatRelay — SETUP & ASSEMBLY GUIDE  (the "put it together" file)
+========================================================================
+
+QUICK ANSWER TO YOUR QUESTION:
+------------------------------
+YES. The file called "EdgeChatRelay.exe" on your Google Drive is the
+FINISHED program. There is nothing to assemble and nothing to install.
+
+    Download EdgeChatRelay.exe  ->  put it on your PC  ->  double-click
+    it  ->  it runs. That's the whole setup.
+
+Everything the program needs (including the entire .NET runtime) is
+already packed INSIDE the .exe. The only other thing it uses is the
+Microsoft Edge "WebView2" engine, which is already part of Windows 10
+and Windows 11 on virtually every computer (see PART 4 if yours is the
+rare exception).
+
+
+========================================================================
+PART 1 — THE 60-SECOND PATH (this is all you need)
+========================================================================
+
+WHAT TO DOWNLOAD FROM GOOGLE DRIVE:
+    [x]  EdgeChatRelay.exe          <-- ONLY THIS FILE
+    [ ]  SETUP-GUIDE.txt            (optional - this file, just in case)
+    [ ]  README.md                  (optional - feature reference)
+    [ ]  EdgeChatRelay-backup-sources.zip   (NOT needed to run the app)
+    [ ]  the .cs / .js / .json files         (NOT needed to run the app)
+    [ ]  the screenshot                       (NOT needed)
+
+STEPS:
+  1. On your phone or PC, open Google Drive and go to the folder:
+       "EdgeChatRelay backup 2026-11-04"
+
+  2. Tap/click "EdgeChatRelay.exe" and choose Download.
+     (162 MB - it is big because the whole runtime is inside it.)
+
+  3. When it finishes downloading, move it somewhere permanent,
+     e.g.:
+       C:\Users\<you>\Desktop\EdgeChatRelay.exe
+     or make a folder like C:\Apps\EdgeChatRelay\ and put it there.
+
+  4. DOUBLE-CLICK EdgeChatRelay.exe.
+
+  5. IF a blue window says "Windows protected your PC"  <- expected!
+     It appears only because the program has no paid code-signing
+     certificate. It is safe. Do this:
+         a) Click "More info"
+         b) Click "Run anyway"
+     (If you skip this file's other advice, remember just this:
+      More info -> Run anyway.)
+
+  6. The program opens: one window, three columns -
+       [ Panel 1 ]  [ CONDUIT (middle box) ]  [ Panel 2 ]
+
+  DONE. You are now running it.
+
+
+========================================================================
+PART 2 — WHAT TO DO THE FIRST TIME (mini walkthrough)
+========================================================================
+
+  1. In Panel 1's address bar (top of the left panel), type a chatbot
+     website (e.g.  chatgpt.com ) and press Enter.
+  2. Sign in like a normal human being (Google/email login works -
+     popups open as normal little windows).
+  3. Repeat in Panel 2 with a chatbot site (same site with a different
+     account works too - each panel keeps its OWN separate login).
+  4. Chat normally with each bot. Every reply is automatically saved to
+     its own text file:
+         Documents\EdgeChatRelay\panel1_chat_log.txt
+         Documents\EdgeChatRelay\panel2_chat_log.txt
+  5. To make the two bots talk TO EACH OTHER:
+     press the big "ARM RELAY" button at the top.
+     Each new bot reply now passes visibly through the middle CONDUIT
+     box and gets typed into the other panel's chat box automatically.
+  6. GO TAKE THAT SHOWER. Come back whenever.
+  7. To grab the reins: press STOP (or Esc). Type into the middle
+     CONDUIT box and press "-> Panel 1" / "-> Panel 2" / "-> Both" to
+     interject. Press ARM RELAY again to hand it back to the bots.
+  8. TIP: while a relayed message sits in the middle box (during the
+     delay countdown) you can EDIT it - whatever is in the box when
+     the timer ends is what actually gets sent. Erase it = cancel.
+
+  '?' button (top bar) shows this help inside the program too.
+
+
+========================================================================
+PART 3 — THE ONLY "SCARY" POP-UP (SmartScreen explained)
+========================================================================
+
+  WHY IT APPEARS: Windows warns about any .exe that isn't signed with a
+  paid certificate. This one is not (signing costs $$ and requires a
+  registered business identity). The warning does NOT mean the file is
+  dangerous - it means Windows doesn't recognize the publisher.
+
+  WHAT TO DO, every time you first run a freshly-downloaded copy:
+       More info  ->  Run anyway
+
+  OPTIONAL (makes the warning never appear for this file):
+       Right-click EdgeChatRelay.exe -> Properties ->
+       at the bottom click "Unblock" -> Apply -> OK
+
+
+========================================================================
+PART 4 — REQUIREMENTS (what must already be on the PC)
+========================================================================
+
+  - Windows 10 or Windows 11, 64-bit  (x64)          [almost all PCs]
+  - Microsoft Edge "WebView2 Runtime":
+      * ALREADY PREINSTALLED on virtually every Windows 10/11 PC
+        (it arrives with Windows Update / Microsoft Edge).
+      * You can check: Settings -> Apps -> search "WebView2".
+      * If somehow missing, the program shows a message with a link to
+        Microsoft's free installer (one small download, install, done).
+  - Internet connection (the chatbot websites are, after all, online)
+  - About 300 MB of free disk space (the .exe + its first-run cache)
+  - NOTHING to download besides the .exe itself. No .NET, no Python,
+    no Node, no runtimes, no dependencies. All inside the .exe.
+
+
+========================================================================
+PART 5 — IF SOMETHING'S NOT RIGHT
+========================================================================
+
+  "Windows protected your PC" ................ see PART 3 (More info ->
+                                              Run anyway)
+  "You need a new app to open this file" ..... you are probably on a
+                                              phone. Do the download on
+                                              a Windows PC instead.
+  App opens but panels look empty ............ type a full website
+                                              address (e.g. chatgpt.com)
+                                              in the panel's URL bar and
+                                              press Enter.
+  "Could not start the Edge WebView2 runtime"  install WebView2 from
+                                              Microsoft (the message box
+                                              contains the link).
+  A bot's reply wasn't relayed .............. click "Rescan" in the
+                                              panel where the reply
+                                              appeared; check the
+                                              transit log in the middle
+                                              column.
+  Relay is typing into the wrong chat box .... set "Send: Fill only" in
+                                              that panel - messages then
+                                              wait in the chat box for
+                                              your approval.
+  Antivirus flags it ......................... normal for unsigned exes;
+                                              add an exception or allow
+                                              it once. (It only does what
+                                              your fingers could do: it
+                                              types text into web pages
+                                              you are signed into.)
+  Anything else ............................. README.md on the Drive has
+                                              the full feature reference.
+
+
+========================================================================
+PART 6 — OPTIONAL: REBUILD FROM SOURCE (only if you ever want to)
+========================================================================
+
+  You do NOT need this to use the program. This is only if the .exe is
+  ever lost and you want to build a fresh copy yourself from the source
+  code on the Drive.
+
+  WHAT TO DOWNLOAD (for rebuilding only):
+    [x]  EdgeChatRelay-backup-sources.zip   (or all the .cs files +
+                                            EdgeChatRelay.csproj)
+    [x]  ".NET 8 SDK" (free, from https://dotnet.microsoft.com/download
+         - download "SDK" 8.x for Windows x64, about 200 MB)
+
+  STEPS:
+   1. Install the .NET 8 SDK (double-click the installer, Next/Finish).
+   2. Unzip "EdgeChatRelay-backup-sources.zip" anywhere, e.g.
+      C:\Projects\EdgeChatRelay\   (it contains all the .cs files and
+      EdgeChatRelay.csproj - README.md and the tests are in there too).
+   3. Open Notepad's big brother "Command Prompt" or "Terminal" in that
+      folder and run ONE single command (copy-paste):
+
+        dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish
+
+   4. When it finishes, the brand-new program is at:
+        C:\Projects\EdgeChatRelay\publish\EdgeChatRelay.exe
+   5. Optional - run the test suite for the capture engine:
+        (install Node.js free from nodejs.org, then:)
+        cd tests-folder && npm install && node test.js
+      ...but this is optional; the shipped .exe was already tested.
+
+
+========================================================================
+PART 7 — WHAT EACH FILE ON THE DRIVE IS (inventory)
+========================================================================
+
+  EdgeChatRelay.exe ............ the PROGRAM. Download this. Done.
+  SETUP-GUIDE.txt .............. this file.
+  README.md .................... feature reference / manual.
+  EdgeChatRelay-backup-sources.zip .. backup bundle of everything below
+                                (source code + tests + README + guide).
+  CaptureScript.cs ............. \  the program's source code (9 files),
+  MainForm.cs                  |  for rebuilding or tinkering only.
+  PanelPane.cs                 |
+  ConduitBox.cs                |
+  RelayEngine.cs               |
+  AppSettings.cs               |
+  PopupForm.cs                 |
+  Program.cs                   |
+  EdgeChatRelay.csproj ........ /
+  test.js ...................... \  the capture engine's test suite
+  package.json / package-lock.json  (optional, for developers).
+  Screenshot_*.jpg ............. the screenshot you sent me earlier.
+
+========================================================================
+  END OF GUIDE.  Now go grab EdgeChatRelay.exe and take that shower.
+========================================================================

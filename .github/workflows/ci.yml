@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  js-tests:
+    name: Capture-script tests (jsdom)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: js-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: js-test/package-lock.json
+
+      - run: npm ci
+      - run: npm test
+
+  csharp-build:
+    name: C# build (win-x64)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore EdgeChatRelay/EdgeChatRelay.csproj
+
+      - name: Build
+        run: dotnet build EdgeChatRelay/EdgeChatRelay.csproj -c Release --no-restore

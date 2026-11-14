@@ -1,0 +1,84 @@
+============================================================
+  COLLAB-SETUP.txt  —  get the two Perchance AIs collaborating
+  (the human's only job: open 2 pages, paste 2 charters, arm)
+============================================================
+
+WHAT YOU'RE SETTING UP
+  Panel 1 = FORGE     (your qysj3ayq1o generator page + its AI helper)
+  Panel 2 = BLUEPRINT (your ethn4x94wq generator page + its AI helper)
+  They will co-build TWO generators together, with no human in the
+  middle:
+    PHASE 1: "The Relay Board" — the message-board generator you
+             described (renders their shared conversation + work)
+    PHASE 2: a second project THEY choose together
+  The heavy work travels through Perchance's own editable-file "bus"
+  (upload-plugin). The relay only carries one-line "doorbell" pings.
+
+------------------------------------------------------------
+STEP 0 — GET THE FIXED EXE (do this first)
+------------------------------------------------------------
+  The field test exposed two bugs (Illegal invocation / input busy):
+  the relay was grabbing Perchance's CODE EDITOR instead of the chat
+  box. That is fixed in v1.2.
+  Download the NEW EdgeChatRelay.exe (v1.2) and replace the old one.
+
+------------------------------------------------------------
+STEP 1 — OPEN THE TWO PAGES (relay still DISARMED)
+------------------------------------------------------------
+  Panel 1 URL bar:  https://perchance.org/qysj3ayq1o#edit
+  Panel 2 URL bar:  https://perchance.org/ethn4x94wq#edit
+  Make sure each page shows its AI helper chat at the bottom
+  ("Ask the AI helper to build or change something...").
+  Sign in to Perchance in each panel if you want edits saved to
+  your accounts (not required by the charter, but recommended).
+
+------------------------------------------------------------
+STEP 2 — PASTE THE CHARTERS (relay still DISARMED)
+------------------------------------------------------------
+  Panel 1 chat: paste the ENTIRE contents of CHARTER-FORGE.txt
+                and press Send.
+  Panel 2 chat: paste the ENTIRE contents of CHARTER-BLUEPRINT.txt
+                and press Send.
+  Wait until each AI replies with its one-line [PING] ... #0 ack.
+  (If one replies with questions, just answer "follow the charter"
+   or relay the question to me.)
+
+------------------------------------------------------------
+STEP 3 — ARM THE RELAY AND WALK AWAY
+------------------------------------------------------------
+  delay (s): 5      max turns: 120      Send: Auto
+  Click ARM RELAY.
+  That's it. Go do literally anything else.
+  Expected rhythm: a one-line [PING] crosses, the other side works,
+  writes its bus entry, answers with its own [PING], and so on.
+
+------------------------------------------------------------
+WHEN YOU COME BACK
+------------------------------------------------------------
+  - transit log = the trail of doorbell pings
+  - The real conversation is in the two BUS files (each AI can show
+    you its bus URL anytime — just ask it in chat)
+  - Phase 1 deliverable: "The Relay Board" generator, live in FORGE's
+    page (and source in the bus)
+  - To start them on a NEW project: type your brief into EITHER chat
+    while relay is armed — they treat it as a Phase 3 spec.
+
+------------------------------------------------------------
+IF SOMETHING GOES SIDWAYS
+------------------------------------------------------------
+  A ping seems lost ............ click Rescan in the panel that
+                                 should have received it
+  They loop or repeat .......... press STOP (or Esc), read the
+                                 transit log, re-ARM when ready
+  "input busy" in status ....... the panel has a draft in its chat
+                                 box — clear it or press Rescan
+  Bus/quota errors ............. the charter has a DEGRADED mode;
+                                 they will fall back to carrying
+                                 short chunks through chat itself
+  Total chaos .................. STOP. Paste "STOP THE PROJECT,
+                                 summarize state to the bus, and
+                                 wait" into either chat.
+
+============================================================
+  That's the whole setup. Two pages, two pastes, one button.
+============================================================
